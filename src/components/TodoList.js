@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   noTask: {
     marginTop: theme.spacing(5),
   },
+  markedTask: {
+    textDecoration: "line-through",
+  },
 }));
 
 // main
@@ -70,7 +73,7 @@ export function TodoList({ initialTasks = [] }) {
   }
 
   function handleToggle(value) {
-    return () => {
+    return (event) => {
       const currentIndex = checked.indexOf(value);
       const newChecked = [...checked];
       if (currentIndex === -1) {
@@ -123,7 +126,12 @@ export function TodoList({ initialTasks = [] }) {
                     divider={tasks.length > 1}
                     button
                   >
-                    <ListItemText primary={task} />
+                    <ListItemText
+                      className={
+                        checked.indexOf(id) !== -1 ? classes.markedTask : ""
+                      }
+                      primary={task}
+                    />
                     <ListItemIcon>
                       <Checkbox
                         color="primary"
