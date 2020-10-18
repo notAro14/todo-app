@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { Homepage } from "./views/Homepage";
@@ -13,7 +19,7 @@ export default function App() {
         <Router>
           <ul>
             <li>
-              <Link to="/">Homepage</Link>
+              <Link to="/todo-app">Homepage</Link>
             </li>
             <li>
               <Link to="/signup">Sign up</Link>
@@ -21,6 +27,9 @@ export default function App() {
           </ul>
           <Switch>
             <Route exact path="/">
+              <Redirect to="/todo-app" />
+            </Route>
+            <Route exact path="/todo-app">
               <Homepage />
             </Route>
             <Route exact path="/signup">
