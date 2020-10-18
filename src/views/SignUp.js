@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Typography, TextField, Button, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import zxcvbn from "zxcvbn";
+import { PasswordAlert } from "../components/PasswordAlert";
 
 // styles
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   formControl: {
-    margin: "1rem 0",
+    marginBottom: theme.spacing(2),
     width: "100%",
   },
   button: {
@@ -24,17 +26,28 @@ const useStyles = makeStyles((theme) => ({
 export function SignUp() {
   const classes = useStyles();
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
   });
+  const { firstName, lastName, email, password } = formData;
+
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   function handleFormChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
-  const { email, password, passwordConfirmation } = formData;
-  console.log(formData);
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  useEffect(() => {
+    const { score } = zxcvbn(password);
+    setPasswordStrength(score);
+  }, [password]);
+
   return (
     <>
       <Box>
@@ -42,7 +55,30 @@ export function SignUp() {
           Sign up
         </Typography>
       </Box>
-      <form className={classes.form} onChange={handleFormChange}>
+      <form
+        className={classes.form}
+        onSubmit={handleSubmit}
+        onChange={handleFormChange}
+      >
+        <TextField
+          variant="outlined"
+          name="firstName"
+          type="text"
+          required
+          label="First name"
+          className={classes.formControl}
+          autoFocus
+          value={firstName}
+        />
+        <TextField
+          variant="outlined"
+          name="lastName"
+          type="text"
+          required
+          label="Last name"
+          className={classes.formControl}
+          value={lastName}
+        />
         <TextField
           variant="outlined"
           name="email"
@@ -50,9 +86,9 @@ export function SignUp() {
           required
           label="E-mail address"
           className={classes.formControl}
-          autoFocus
           value={email}
         />
+
         <TextField
           variant="outlined"
           name="password"
@@ -62,15 +98,11 @@ export function SignUp() {
           className={classes.formControl}
           value={password}
         />
-        <TextField
-          variant="outlined"
-          name="passwordConfirmation"
-          type="password"
-          required
-          label="Confirm Password"
-          className={classes.formControl}
-          value={passwordConfirmation}
-        />
+
+        {password.length > 0 && (
+          <PasswordAlert passwordStrength={passwordStrength} />
+        )}
+
         <Button
           className={classes.button}
           type="submit"
