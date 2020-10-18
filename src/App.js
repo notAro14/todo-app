@@ -1,26 +1,33 @@
 import React from "react";
-import { TodoList } from "./components/TodoList";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
+import { Homepage } from "./views/Homepage";
+import { SignUp } from "./views/SignUp";
 
-export default function App(props) {
+export default function App() {
   return (
     <>
       <CssBaseline />
       <Container maxWidth="sm">
-        <Box component="div">
-          <Typography
-            component="h1"
-            variant="h3"
-            color="primary"
-            align="center"
-          >
-            Todoism
-          </Typography>
-        </Box>
-        <TodoList />
+        <Router>
+          <ul>
+            <li>
+              <Link to="/">Homepage</Link>
+            </li>
+            <li>
+              <Link to="/signup">Sign up</Link>
+            </li>
+          </ul>
+          <Switch>
+            <Route exact path="/">
+              <Homepage />
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
+          </Switch>
+        </Router>
       </Container>
     </>
   );

@@ -98,10 +98,11 @@ export function TodoList({ initialTasks = [] }) {
       <Box>
         <form onSubmit={handleSubmit}>
           <TextField
+            label="Enter a task"
+            autoFocus
             fullWidth
             value={incomingTask}
             onChange={handleChange}
-            label="Enter a task"
           />
         </form>
         {duplicateAlert && (
@@ -151,6 +152,7 @@ export function TodoList({ initialTasks = [] }) {
             </List>
           </Paper>
           <Button
+            style={{ marginBottom: "1.5rem" }}
             disabled={checked.length === 0}
             variant="outlined"
             startIcon={<DeleteIcon />}
