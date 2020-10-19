@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
+// react
+import React from "react";
+// router
 import { Link as RouterLink } from "react-router-dom";
+// material ui
 import { Box, Typography, TextField, Button, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import zxcvbn from "zxcvbn";
+// components
 import { PasswordAlert } from "../components/PasswordAlert";
+import { FieldAlert } from "../components/FieldAlert";
+// hooks
+import { usePasswordValidation } from "../hooks/usePasswordValidation";
+import { useFormFieldValidation } from "../hooks/useFormFieldValidation";
+import { validateFullname } from "../utils/index";
+// library
+import * as isemail from "isemail";
 
 // styles
 const useStyles = makeStyles((theme) => ({
@@ -21,32 +31,23 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginBottom: theme.spacing(2),
   },
+  alert: {
+    marginTop: theme.spacing(-2),
+    marginBottom: theme.spacing(2),
+    alignSelf: "flex-start",
+  },
 }));
 
 export function SignUp() {
   const classes = useStyles();
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-  const { firstName, lastName, email, password } = formData;
 
-  const [passwordStrength, setPasswordStrength] = useState(0);
-
-  function handleFormChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
-
-  useEffect(() => {
-    const { score } = zxcvbn(password);
-    setPasswordStrength(score);
-  }, [password]);
+  const [password, setPassword, score] = usePasswordValidation();
+  const [fullname, setFullname, isFullnameValid] = useFormFieldValidation(
+    validateFullname
+  );
+  const [email, setEmail, isEmailValid] = useFormFieldValidation(
+    isemail.validate
+  );
 
   return (
     <>
@@ -55,30 +56,21 @@ export function SignUp() {
           Sign up
         </Typography>
       </Box>
-      <form
-        className={classes.form}
-        onSubmit={handleSubmit}
-        onChange={handleFormChange}
-      >
+      <form className={classes.form}>
         <TextField
           variant="outlined"
-          name="firstName"
+          name="fullname"
           type="text"
           required
-          label="First name"
+          label="Fullname"
           className={classes.formControl}
           autoFocus
-          value={firstName}
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
         />
-        <TextField
-          variant="outlined"
-          name="lastName"
-          type="text"
-          required
-          label="Last name"
-          className={classes.formControl}
-          value={lastName}
-        />
+        {fullname.length > 0 && !isFullnameValid ? (
+          <FieldAlert className={classes.alert}>Fullname is invalid</FieldAlert>
+        ) : null}
         <TextField
           variant="outlined"
           name="email"
@@ -87,7 +79,11 @@ export function SignUp() {
           label="E-mail address"
           className={classes.formControl}
           value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
+        {email.length > 0 && !isEmailValid ? (
+          <FieldAlert className={classes.alert}>Email is invalid</FieldAlert>
+        ) : null}
 
         <TextField
           variant="outlined"
@@ -97,11 +93,10 @@ export function SignUp() {
           label="Password"
           className={classes.formControl}
           value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-        {password.length > 0 && (
-          <PasswordAlert passwordStrength={passwordStrength} />
-        )}
+        {password.length > 0 && <PasswordAlert passwordStrength={score} />}
 
         <Button
           className={classes.button}
