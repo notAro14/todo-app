@@ -1,0 +1,38 @@
+{
+  "workbench.sideBar.location": "left",
+  "editor.fontFamily": "Cascadia Code",
+  "editor.mouseWheelZoom": true,
+  "editor.formatOnPaste": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.snippetSuggestions": "top",
+  "editor.tabSize": 2,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.donotVerifyTags": true,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.fontLigatures": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.suggestFontSize": 12,
+  "emmet.includeLanguages": {
+    "ejs": "html"
+  },
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontSize": 12,
+  "debug.console.fontSize": 12,
+  "screencastMode.fontSize": 45,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.formatOnType": true,
+  "editor.wordWrap": "wordWrapColumn",
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.quoteProps": "consistent",
+  "prettier.jsxSingleQuote": true,
+  "prettier.requireConfig": true
+}
