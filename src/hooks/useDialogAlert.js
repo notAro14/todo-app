@@ -1,40 +1,43 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   Button,
-} from "@material-ui/core";
-
-export function useDialogAlert(dialogContent, buttonLabel) {
-  const [open, setOpen] = useState(false);
+} from '@material-ui/core'
+/**
+ * Use a dialog box to alert the user
+ *
+ * @returns{array} An array containing the function to open the dialog box and the component itself
+ */
+export function useDialogAlert() {
+  const [open, setOpen] = useState(false)
   function openDialog() {
-    setOpen(true);
+    setOpen(true)
   }
-  function handleClose() {
-    setOpen(false);
+  function closeDialog() {
+    setOpen(false)
   }
-  function DialogAlert({ children }) {
+  function DialogAlert({ dialogContent, buttonLabel }) {
     return (
       <Dialog
         open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             {dialogContent}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={closeDialog} color='primary' autoFocus>
             {buttonLabel}
           </Button>
         </DialogActions>
       </Dialog>
-    );
+    )
   }
-  return [openDialog, DialogAlert];
+  return [openDialog, DialogAlert, closeDialog]
 }
