@@ -1,10 +1,16 @@
 // react
 import React from 'react'
 // router
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link as RouterLink,
+} from 'react-router-dom'
 // material-ui
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, Grid } from '@material-ui/core'
 import Container from '@material-ui/core/Container'
+import Link from '@material-ui/core/Link'
 // views
 import { Homepage } from './views/Homepage'
 import { SignUp } from './views/SignUp'
@@ -34,31 +40,46 @@ export default function App() {
       <Container maxWidth='sm'>
         <UserContext.Provider value={user}>
           <Router>
-            <ul>
-              <li>
-                <Link to='/'>Homepage</Link>
-              </li>
+            <Grid
+              style={{ paddingTop: '1.5rem', marginBottom: '1.5rem' }}
+              container
+              spacing={4}
+              direction='row'
+              alignItems='center'
+              justify='center'
+            >
+              <Grid item>
+                <Link component={RouterLink} to='/todo-app'>
+                  Homepage
+                </Link>
+              </Grid>
               {user ? (
-                <li>
-                  <button
+                <Grid item>
+                  <Link
+                    component='button'
+                    color='error'
                     onClick={() => auth.signOut().then(() => setUser(null))}
                   >
                     Sign out
-                  </button>
-                </li>
+                  </Link>
+                </Grid>
               ) : (
                 <>
-                  <li>
-                    <Link to='/signup'>Sign up</Link>
-                  </li>
-                  <li>
-                    <Link to='/signin'>Sign in</Link>
-                  </li>
+                  <Grid item>
+                    <Link component={RouterLink} to='/signup'>
+                      Sign up
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link component={RouterLink} to='/signin'>
+                      Sign in
+                    </Link>
+                  </Grid>
                 </>
               )}
-            </ul>
+            </Grid>
             <Switch>
-              <Route exact path='/' component={Homepage} />
+              <Route exact path='/todo-app' component={Homepage} />
               <Route exact path='/signin' component={SignIn} />
               <Route exact path='/signup' component={SignUp} />
               <Route component={NotFound} />

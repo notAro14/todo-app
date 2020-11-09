@@ -45,7 +45,7 @@ export function SignIn() {
   const user = React.useContext(UserContext)
 
   React.useEffect(() => {
-    if (user) history.push('/')
+    if (user) history.push('/todo-app')
   })
 
   function handleSubmit(e) {
@@ -69,35 +69,36 @@ export function SignIn() {
           <FieldAlert className={classes.alert}>{errorMessage}</FieldAlert>
         )}
         <TextField
-          variant='outlined'
           autoComplete='username'
-          name='email'
-          type='email'
-          required
-          label='E-mail address'
+          autoFocus
           className={classes.formControl}
-          value={email}
+          label='E-mail address'
+          name='email'
           onChange={(e) => setEmail(e.target.value)}
+          required
+          type='email'
+          value={email}
+          variant='outlined'
         />
 
         <TextField
           autoComplete='current-password'
-          variant='outlined'
-          name='password'
-          type='password'
-          required
-          label='Password'
           className={classes.formControl}
-          value={password}
+          label='Password'
+          name='password'
           onChange={(e) => setPassword(e.target.value)}
+          required
+          type='password'
+          value={password}
+          variant='outlined'
         />
 
         <Button
           className={classes.button}
+          color='primary'
+          fullWidth
           type='submit'
           variant='contained'
-          fullWidth
-          color='primary'
         >
           Connect
         </Button>

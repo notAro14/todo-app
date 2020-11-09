@@ -57,7 +57,7 @@ export function SignUp() {
   const history = useHistory()
   const user = React.useContext(UserContext)
   React.useEffect(() => {
-    if (user) history.push('/')
+    if (user) history.push('/todo-app')
   })
 
   function handleSubmit(e) {
